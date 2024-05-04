@@ -24,7 +24,7 @@ public class ApiServiceTest {
         
     @After
     public void tearDown(){
-       
+        playwright.close();
     }
     
 }
