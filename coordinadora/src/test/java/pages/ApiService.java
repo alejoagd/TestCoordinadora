@@ -1,3 +1,5 @@
+package pages;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,29 +21,17 @@ import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.RequestOptions;
 
+import io.cucumber.java.it.Date;
+import io.cucumber.java.it.Date;
+import io.cucumber.java.it.Date;
 import io.cucumber.messages.types.Exception;
 
-public class requestPostTest extends RuntimeException{
+import io.cucumber.messages.types.Exception;
 
-    Playwright playwright;
-    APIRequest request;
-    APIRequestContext requestContext;
+public class ApiService extends RuntimeException{
 
 
-    @Before
-    public void setup(){
-        playwright =Playwright.create();
-        request = playwright.request();
-        requestContext = request.newContext();
-    }
-
-    @After
-    public void tearDown(){
-        playwright.close();
-    }
-  
-    @Test
-    public void createUserText() throws IOException{
+    public void createPickup(String fecha,String direccion) throws IOException{
 
         //Lista [] con un objeto {} de medidas aproximadas dentro del body 
         List<Map<String, Object>> medidasAproximadas = new ArrayList<>();
@@ -122,8 +112,8 @@ public class requestPostTest extends RuntimeException{
         data.put("documento","1036149000");
         data.put("celular","3005777777");
         data.put("ciudadDetalle",detalle);
-        data.put("direccion","Cl 100 # 20 30");
-        data.put("fechaRecogida","2024-06-10");
+        data.put("direccion",direccion);
+        data.put("fechaRecogida",fecha);
         data.put("nombreEntrega","prueba");
         data.put("apellidosEntrega","prueba1");
         data.put("celularEntrega","3045677778");
@@ -144,8 +134,13 @@ public class requestPostTest extends RuntimeException{
 
         //POST call 
 
+        Playwright playwright = Playwright.create();
+        APIRequest request = playwright.request();
 
+       
         try{
+            APIRequestContext requestContext = request.newContext();
+
             APIResponse apiPostResponse = requestContext.post("https://apiv2-test.coordinadora.com/recogidas/cm-solicitud-recogidas-ms/solicitud-recogida",
             RequestOptions.create()
                 .setHeader("Postman-Token","4824152f-601a-4d1f-8153-43969ec40701")
@@ -197,7 +192,7 @@ public class requestPostTest extends RuntimeException{
         System.out.println(postJsonResponse.toPrettyString());
 
 
-        }catch(requestPostTest e ){
+        }catch(ApiService e ){
             System.out.println("Error al realizar la solicitud  POST : "+ e.getMessage());
             e.printStackTrace(); 
 
